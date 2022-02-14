@@ -31,17 +31,17 @@ public class Actor {
     @ManyToOne
     private City city;
 
-    // do we need the no args default contructor?
+    // do we need the no args default constructor?
     protected Actor() {}
 
-    public Actor(String firstName, String lastName, String gender, int birthYear) {
+    public Actor(String firstName, String lastName, String gender, Integer birthYear) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
         this.birthYear = birthYear;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

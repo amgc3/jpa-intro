@@ -19,4 +19,8 @@ public class ActorService {
     public List<Actor> fetchActors() {
         return actorRepository.findAll();
     }
+
+    public Actor saveActor(Actor actor) {
+        return actorRepository.save(actor);
+    }
 }
