@@ -1,6 +1,12 @@
 package com.springbootframework.datapostgres.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import java.util.List;
 import java.util.Objects;
 
@@ -25,7 +31,7 @@ public class Film {
     private int runtimeMinutes;
 
     // add actor relationship to film
-    @OneToMany
+    @ManyToMany
     private List<Actor> actors;
 
     // good practice to implement equals and hashCode based on id value

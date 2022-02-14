@@ -1,12 +1,6 @@
 package com.springbootframework.datapostgres.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -29,9 +23,13 @@ public class Actor {
     @Column(name = "birth_year")
     private int birthYear;
 
-    // add film relationship to actor
+    // add film relationship to actors
     @OneToMany
     private List<Film> films;
+
+    // add city relationship to actors
+    @ManyToOne
+    private City city;
 
     // do we need the no args default contructor?
     protected Actor() {}
@@ -89,6 +87,14 @@ public class Actor {
 
     public void setFilms(List<Film> films) {
         this.films = films;
+    }
+
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
     }
 
     @Override

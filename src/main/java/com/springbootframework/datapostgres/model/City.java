@@ -21,8 +21,6 @@ public class City {
     @OneToMany
     private List<Actor> actors;
 
-
-
     public List<Actor> getActors() {
         return actors;
     }
