@@ -30,9 +30,7 @@ public class ActorController {
     @PostMapping("/actors")
     public ResponseEntity<Actor> postActor(final @RequestBody Actor actor) {
         try {
-            Actor savedActor = actorService.saveActor(
-                    new Actor(actor.getFirstName(), actor.getLastName(), actor.getGender(), actor.getBirthYear())
-            );
+            Actor savedActor = actorService.saveActor(actor);
             return new ResponseEntity<>(savedActor, HttpStatus.CREATED);
         } catch (Exception e) {
             System.out.print(e.getMessage());

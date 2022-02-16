@@ -2,6 +2,7 @@ package com.springbootframework.datapostgres.model;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name="actors")
@@ -24,11 +25,16 @@ public class Actor {
     private int birthYear;
 
     // add film relationship to actors
-    @OneToMany
+    @ManyToMany
+    @JoinTable(
+            name = "actor_film",
+            joinColumns = @JoinColumn(name = "actors_id"),
+            inverseJoinColumns = @JoinColumn(name = "films_id"))
     private List<Film> films;
 
     // add city relationship to actors
     @ManyToOne
+    @JoinColumn(name = "city_id")
     private City city;
 
     // do we need the no args default constructor?
@@ -95,6 +101,19 @@ public class Actor {
 
     public void setCity(City city) {
         this.city = city;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Actor actor = (Actor) o;
+        return Objects.equals(id, actor.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
     @Override

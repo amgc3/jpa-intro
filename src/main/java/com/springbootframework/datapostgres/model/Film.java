@@ -31,7 +31,7 @@ public class Film {
     private int runtimeMinutes;
 
     // add actor relationship to film
-    @ManyToMany
+    @ManyToMany(mappedBy = "films")
     private List<Actor> actors;
 
     // good practice to implement equals and hashCode based on id value

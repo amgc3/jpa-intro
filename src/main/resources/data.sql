@@ -1,3 +1,4 @@
+
 INSERT INTO cities (city_name, country_code) VALUES ('London', 'GB');
 INSERT INTO cities (city_name, country_code)  VALUES ('Grayshott', 'GB');
 INSERT INTO cities (city_name, country_code)  VALUES ('New York City', 'US');

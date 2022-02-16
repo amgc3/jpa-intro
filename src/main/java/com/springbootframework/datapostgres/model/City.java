@@ -3,6 +3,7 @@ package com.springbootframework.datapostgres.model;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "cities")
@@ -18,16 +19,16 @@ public class City {
     @Column(name = "country_code")
     private String countryCode;
 
-    @OneToMany
-    private List<Actor> actors;
+//    @OneToMany(mappedBy = "city")
+//    private List<Actor> actors;
 
-    public List<Actor> getActors() {
-        return actors;
-    }
-
-    public void setActors(List<Actor> actors) {
-        this.actors = actors;
-    }
+//    public List<Actor> getActors() {
+//        return actors;
+//    }
+//
+//    public void setActors(List<Actor> actors) {
+//        this.actors = actors;
+//    }
 
     public Integer getId() {
         return id;
@@ -51,6 +52,19 @@ public class City {
 
     public void setCountryCode(String countryCode) {
         this.countryCode = countryCode;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        City city = (City) o;
+        return Objects.equals(id, city.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
     @Override
