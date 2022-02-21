@@ -3,12 +3,15 @@ package com.springbootframework.datapostgres.service;
 import com.springbootframework.datapostgres.model.Actor;
 import com.springbootframework.datapostgres.model.Film;
 import com.springbootframework.datapostgres.repository.FilmRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class FilmService {
+
+    @Autowired
     private final FilmRepository filmRepository;
 
     public FilmService(final FilmRepository filmRepository) {

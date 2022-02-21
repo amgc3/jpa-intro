@@ -1,7 +1,9 @@
 package com.springbootframework.datapostgres.controller;
 
 import com.springbootframework.datapostgres.model.Actor;
+import com.springbootframework.datapostgres.model.Film;
 import com.springbootframework.datapostgres.service.ActorService;
+import com.springbootframework.datapostgres.service.FilmService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,13 +20,22 @@ public class ActorController {
     @Autowired
     private final ActorService actorService;
 
-    public ActorController(ActorService actorService) {
+    @Autowired
+    private final FilmService filmService;
+
+    public ActorController(ActorService actorService, FilmService filmService) {
         this.actorService = actorService;
+        this.filmService = filmService;
     }
 
     @GetMapping("/actors")
     public ResponseEntity<List<Actor>> getActors() {
         return new ResponseEntity<>(actorService.fetchActors(), HttpStatus.OK);
+    }
+
+    @GetMapping("actors/films")
+    public ResponseEntity<List<Film>> getFilms() {
+        return new ResponseEntity<>(filmService.fetchFilms(), HttpStatus.OK) ;
     }
 
     @PostMapping("/actors")
