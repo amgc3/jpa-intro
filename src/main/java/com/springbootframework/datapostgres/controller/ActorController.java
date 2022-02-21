@@ -50,4 +50,16 @@ public class ActorController {
         }
     }
 
+    @PostMapping("/actors/films")
+    public ResponseEntity<Film> postFilm(final @RequestBody Film film) {
+        try {
+            Film savedFilm = filmService.saveFilm(film);
+            return new ResponseEntity<>(savedFilm, HttpStatus.CREATED);
+        } catch (Exception e) {
+            System.out.print(e.getMessage());
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+
+        }
+    }
+
 }

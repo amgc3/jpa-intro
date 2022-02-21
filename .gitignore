@@ -31,3 +31,8 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### repos to refer to
+/src/main/java/com/springbootframework/datapostgres/repository/ActorCrudImp.java
+/src/main/java/com/springbootframework/datapostgres/repository/ActorRepoImp.java
+/src/main/java/com/springbootframework/datapostgres/service/ActorDAOService.java
