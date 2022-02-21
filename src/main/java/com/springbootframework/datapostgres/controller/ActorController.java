@@ -7,14 +7,12 @@ import com.springbootframework.datapostgres.service.FilmService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class ActorController {
@@ -33,6 +31,16 @@ public class ActorController {
     @GetMapping("/actors")
     public ResponseEntity<List<Actor>> getActors() {
         return new ResponseEntity<>(actorService.fetchActors(), HttpStatus.OK);
+    }
+
+    @GetMapping("/actors/{id}")
+    public ResponseEntity<Optional<Actor>> getActorById(@PathVariable("id") Integer id) {
+        Optional<Actor> actor = this.actorService.fetchActorById(id);
+        if (actor.isPresent()) {
+            return new ResponseEntity<>(actor, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("actors/films")
