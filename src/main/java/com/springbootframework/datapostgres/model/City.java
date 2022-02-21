@@ -2,6 +2,7 @@ package com.springbootframework.datapostgres.model;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,9 +14,11 @@ public class City {
     @GeneratedValue(strategy = GenerationType.IDENTITY )
     private Integer id;
 
+    @NotEmpty
     @Column(name = "city_name")
     private String cityName;
 
+    @NotEmpty
     @Column(name = "country_code")
     private String countryCode;
 

@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 import java.util.Objects;
 
@@ -18,12 +19,15 @@ public class Film {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @NotEmpty
     @Column(name = "title")
     private String title;
 
+    @NotEmpty
     @Column(name = "release_year")
     private int releaseYear;
 
+    @NotEmpty
     @Column(name = "language")
     private String language;
 

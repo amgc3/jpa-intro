@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -39,7 +41,7 @@ public class ActorController {
     }
 
     @PostMapping("/actors")
-    public ResponseEntity<Actor> postActor(final @RequestBody Actor actor) {
+    public ResponseEntity<Actor> postActor(@Valid final @RequestBody Actor actor) {
         try {
             Actor savedActor = actorService.saveActor(actor);
             return new ResponseEntity<>(savedActor, HttpStatus.CREATED);
