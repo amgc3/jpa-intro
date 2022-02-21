@@ -3,6 +3,8 @@ package com.springbootframework.datapostgres.service;
 import com.springbootframework.datapostgres.model.Actor;
 import com.springbootframework.datapostgres.repository.ActorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,7 +27,28 @@ public class ActorService {
         return actorRepository.findById(id);
     }
 
+    public Actor updateActor(Integer id, Actor a) {
+        Optional<Actor> actorToUpdateOptional = actorRepository.findById(id);
+        if (!actorToUpdateOptional.isPresent()) {
+            return null;
+        }
+        Actor actorToUpdate = actorToUpdateOptional.get();
+        if (a.getFirstName() != null) {
+            actorToUpdate.setFirstName(a.getFirstName());
+        }
+        if (a.getLastName() != null) {
+            actorToUpdate.setLastName(a.getLastName());
+        }
+        if (a.getBirthYear() != null) {
+            actorToUpdate.setBirthYear(a.getBirthYear());
+        }
+
+        Actor updatedActor = this.actorRepository.save(actorToUpdate);
+        return updatedActor;
+    }
+
     public Actor saveActor(Actor actor) {
         return actorRepository.save(actor);
     }
+
 }

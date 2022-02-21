@@ -34,10 +34,21 @@ public class ActorController {
     }
 
     @GetMapping("/actors/{id}")
-    public ResponseEntity<Optional<Actor>> getActorById(@PathVariable("id") Integer id) {
-        Optional<Actor> actor = this.actorService.fetchActorById(id);
-        if (actor.isPresent()) {
+    public ResponseEntity<Actor> getActorById(@PathVariable("id") Integer id) {
+        Optional<Actor> actorOptional = this.actorService.fetchActorById(id);
+        if (actorOptional.isPresent()) {
+            Actor actor = actorOptional.get();
             return new ResponseEntity<>(actor, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PutMapping("/actors/{id}")
+    public ResponseEntity<Actor> editActor(@PathVariable("id") Integer id, @RequestBody Actor a) {
+        Actor actorOptional = this.actorService.updateActor(id, a);
+        if (actorOptional != null) {
+            return new ResponseEntity<>(actorOptional, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }

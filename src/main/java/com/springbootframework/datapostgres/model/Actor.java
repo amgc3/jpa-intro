@@ -83,7 +83,7 @@ public class Actor {
         this.gender = gender;
     }
 
-    public int getBirthYear() {
+    public Integer getBirthYear() {
         return birthYear;
     }
 
