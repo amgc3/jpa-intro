@@ -27,7 +27,7 @@ public class ActorService {
         return actorRepository.findById(id);
     }
 
-    public Actor updateActor(Integer id, Actor a) {
+    public Actor updateActorById(Integer id, Actor a) {
         Optional<Actor> actorToUpdateOptional = actorRepository.findById(id);
         if (!actorToUpdateOptional.isPresent()) {
             return null;
@@ -45,6 +45,17 @@ public class ActorService {
 
         Actor updatedActor = this.actorRepository.save(actorToUpdate);
         return updatedActor;
+    }
+
+    public Actor deleteActorById(Integer id){
+        Optional<Actor> actorOptional = this.actorRepository.findById(id);
+        if (!actorOptional.isPresent()) {
+            return null;
+        } else {
+            Actor actorToDelete = actorOptional.get();
+            this.actorRepository.delete(actorToDelete);
+            return actorToDelete;
+        }
     }
 
     public Actor saveActor(Actor actor) {

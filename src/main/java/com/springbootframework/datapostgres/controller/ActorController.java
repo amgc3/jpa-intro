@@ -30,7 +30,7 @@ public class ActorController {
 
     @GetMapping("/actors")
     public ResponseEntity<List<Actor>> getActors() {
-        return new ResponseEntity<>(actorService.fetchActors(), HttpStatus.OK);
+        return new ResponseEntity<>(this.actorService.fetchActors(), HttpStatus.OK);
     }
 
     @GetMapping("/actors/{id}")
@@ -45,10 +45,20 @@ public class ActorController {
     }
 
     @PutMapping("/actors/{id}")
-    public ResponseEntity<Actor> editActor(@PathVariable("id") Integer id, @RequestBody Actor a) {
-        Actor actorOptional = this.actorService.updateActor(id, a);
-        if (actorOptional != null) {
-            return new ResponseEntity<>(actorOptional, HttpStatus.OK);
+    public ResponseEntity<Actor> updateActor(@PathVariable("id") Integer id, @RequestBody Actor a) {
+        Actor actorToUpdate = this.actorService.updateActorById(id, a);
+        if (actorToUpdate != null) {
+            return new ResponseEntity<>(actorToUpdate, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @DeleteMapping("/actors/{id}")
+    public ResponseEntity<Actor> deleteActor(@PathVariable("id") Integer id) {
+        Actor actorToDelete = this.actorService.deleteActorById(id);
+        if (actorToDelete != null) {
+            return new ResponseEntity<>(actorToDelete, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
@@ -56,13 +66,13 @@ public class ActorController {
 
     @GetMapping("actors/films")
     public ResponseEntity<List<Film>> getFilms() {
-        return new ResponseEntity<>(filmService.fetchFilms(), HttpStatus.OK) ;
+        return new ResponseEntity<>(this.filmService.fetchFilms(), HttpStatus.OK) ;
     }
 
     @PostMapping("/actors")
     public ResponseEntity<Actor> postActor(@Valid final @RequestBody Actor actor) {
         try {
-            Actor savedActor = actorService.saveActor(actor);
+            Actor savedActor = this.actorService.saveActor(actor);
             return new ResponseEntity<>(savedActor, HttpStatus.CREATED);
         } catch (Exception e) {
             System.out.print(e.getMessage());
@@ -72,9 +82,9 @@ public class ActorController {
     }
 
     @PostMapping("/actors/films")
-    public ResponseEntity<Film> postFilm(final @RequestBody Film film) {
+    public ResponseEntity<Film> postFilm(@Valid final @RequestBody Film film) {
         try {
-            Film savedFilm = filmService.saveFilm(film);
+            Film savedFilm = this.filmService.saveFilm(film);
             return new ResponseEntity<>(savedFilm, HttpStatus.CREATED);
         } catch (Exception e) {
             System.out.print(e.getMessage());
