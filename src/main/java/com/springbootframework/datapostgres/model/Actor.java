@@ -17,6 +17,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -50,8 +51,8 @@ public class Actor {
     @Column(name = "gender")
     private String gender;
 
-    @Column(name = "birth_year")
-    private Integer birthYear;
+    @Column(name = "birth_date")
+    private LocalDate birthDate;
 
     // add film relationship to actors
     @ManyToMany

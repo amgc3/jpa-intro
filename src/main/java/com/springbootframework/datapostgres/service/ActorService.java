@@ -3,8 +3,6 @@ package com.springbootframework.datapostgres.service;
 import com.springbootframework.datapostgres.model.Actor;
 import com.springbootframework.datapostgres.repository.ActorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -39,8 +37,8 @@ public class ActorService {
         if (a.getLastName() != null) {
             actorToUpdate.setLastName(a.getLastName());
         }
-        if (a.getBirthYear() != null) {
-            actorToUpdate.setBirthYear(a.getBirthYear());
+        if (a.getBirthDate() != null) {
+            actorToUpdate.setBirthDate(a.getBirthDate());
         }
 
         Actor updatedActor = this.actorRepository.save(actorToUpdate);
