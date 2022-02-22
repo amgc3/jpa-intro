@@ -61,5 +61,4 @@ public class ActorService {
     public Actor saveActor(Actor actor) {
         return actorRepository.save(actor);
     }
-
 }
