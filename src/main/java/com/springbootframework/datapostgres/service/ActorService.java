@@ -40,6 +40,9 @@ public class ActorService {
         if (a.getBirthDate() != null) {
             actorToUpdate.setBirthDate(a.getBirthDate());
         }
+        if (a.getGender() != null) {
+            actorToUpdate.setGender(a.getGender());
+        }
 
         Actor updatedActor = this.actorRepository.save(actorToUpdate);
         return updatedActor;
