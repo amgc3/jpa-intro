@@ -1,5 +1,6 @@
 package com.springbootframework.datapostgres.controller;
 
+import com.springbootframework.datapostgres.exception.ResourceNotFoundException;
 import com.springbootframework.datapostgres.model.Actor;
 import com.springbootframework.datapostgres.model.Film;
 import com.springbootframework.datapostgres.service.ActorService;
@@ -34,33 +35,33 @@ public class ActorController {
     }
 
     @GetMapping("/actors/{id}")
-    public ResponseEntity<Actor> getActorById(@PathVariable("id") Integer id) {
+    public ResponseEntity<Object> getActorById(@PathVariable("id") Integer id) {
         Optional<Actor> actorOptional = this.actorService.fetchActorById(id);
         if (actorOptional.isPresent()) {
             Actor actor = actorOptional.get();
             return new ResponseEntity<>(actor, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(String.format("Invalid id : %s ", id), HttpStatus.NOT_FOUND);
         }
     }
 
     @PutMapping("/actors/{id}")
-    public ResponseEntity<Actor> updateActor(@PathVariable("id") Integer id, @RequestBody Actor a) {
+    public ResponseEntity<Object> updateActor(@PathVariable("id") Integer id, @RequestBody Actor a) {
         Actor actorToUpdate = this.actorService.updateActorById(id, a);
         if (actorToUpdate != null) {
             return new ResponseEntity<>(actorToUpdate, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(String.format("Invalid id : %s ", id), HttpStatus.NOT_FOUND);
         }
     }
 
     @DeleteMapping("/actors/{id}")
-    public ResponseEntity<Actor> deleteActor(@PathVariable("id") Integer id) {
+    public ResponseEntity<Object> deleteActor(@PathVariable("id") Integer id) {
         Actor actorToDelete = this.actorService.deleteActorById(id);
         if (actorToDelete != null) {
             return new ResponseEntity<>(actorToDelete, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(String.format("Invalid id : %s ", id), HttpStatus.NOT_FOUND);
         }
     }
 
