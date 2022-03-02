@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 import java.util.List;
 import java.util.Objects;
 
@@ -37,6 +38,7 @@ public class Film {
     private Integer id;
 
     @NotEmpty
+//    @Pattern(regexp="^[A-Za-z]*$",message = "Invalid Input")
     @Column(name = "title")
     private String title;
 

@@ -1,6 +1,7 @@
 package com.springbootframework.datapostgres.controller;
 
 import com.springbootframework.datapostgres.dto.ActorDTO;
+import com.springbootframework.datapostgres.dto.FilmDTO;
 import com.springbootframework.datapostgres.model.Actor;
 import com.springbootframework.datapostgres.model.Film;
 import com.springbootframework.datapostgres.service.ActorService;
@@ -20,18 +21,15 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/actors")
 public class ActorController {
-    @Autowired
-    private ModelMapper modelMapper;
 
-    @Autowired
+    private final ModelMapper modelMapper;
     private final ActorService actorService;
-
-    @Autowired
     private final FilmService filmService;
 
-    public ActorController(ActorService actorService, FilmService filmService) {
+    public ActorController(ActorService actorService, FilmService filmService, ModelMapper modelMapper) {
         this.actorService = actorService;
         this.filmService = filmService;
+        this.modelMapper = modelMapper;
     }
 
 //    @GetMapping
@@ -91,27 +89,29 @@ public class ActorController {
     }
 
     @GetMapping("/films")
-    public ResponseEntity<List<Film>> getFilms() {
-        return new ResponseEntity<>(this.filmService.fetchFilms(), HttpStatus.OK) ;
+    public ResponseEntity<List<FilmDTO>> getFilms() {
+        return new ResponseEntity<>(this.filmService.fetchFilms()
+                .stream()
+                .map(film -> modelMapper.map(film, FilmDTO.class))
+                .collect(Collectors.toList()), HttpStatus.OK) ;
     }
 
     @PostMapping
-    public ResponseEntity<Actor> postActor(@Valid final @RequestBody Actor actor) {
+    public ResponseEntity<Object> postActor(@Valid final @RequestBody Actor actor) {
         try {
-            Actor savedActor = this.actorService.saveActor(actor);
-            return new ResponseEntity<>(savedActor, HttpStatus.CREATED);
-        } catch (Exception e) {
-            System.out.print(e.getMessage());
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-
+            Actor savedActor = this.actorService.createActor(actor);
+            return new ResponseEntity<>(modelMapper.map(savedActor, ActorDTO.class), HttpStatus.CREATED);
+        } catch(Exception e) {
+            System.out.println("saved actpr " + this.actorService.createActor(actor));
+            return new ResponseEntity<>(String.format("Validation failed!"), HttpStatus.BAD_REQUEST);
         }
     }
 
     @PostMapping("/films")
-    public ResponseEntity<Film> postFilm(@Valid final @RequestBody Film film) {
+    public ResponseEntity<Object> postFilm(@Valid final @RequestBody Film film) {
         try {
             Film savedFilm = this.filmService.saveFilm(film);
-            return new ResponseEntity<>(savedFilm, HttpStatus.CREATED);
+            return new ResponseEntity<>(modelMapper.map(savedFilm, FilmDTO.class), HttpStatus.CREATED);
         } catch (Exception e) {
             System.out.print(e.getMessage());
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);

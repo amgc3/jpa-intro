@@ -12,7 +12,7 @@ import java.util.Optional;
 public class ActorService {
     private final ActorRepository actorRepository;
 
-    @Autowired
+    @Autowired // can be omitted since only one constructor
     public ActorService(ActorRepository actorRepository) {
         this.actorRepository = actorRepository;
     }
@@ -59,7 +59,7 @@ public class ActorService {
         }
     }
 
-    public Actor saveActor(Actor actor) {
+    public Actor createActor(Actor actor) {
         return actorRepository.save(actor);
     }
 }
