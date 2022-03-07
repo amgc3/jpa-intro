@@ -6,6 +6,7 @@ import com.springbootframework.datapostgres.model.Actor;
 import com.springbootframework.datapostgres.model.Film;
 import com.springbootframework.datapostgres.service.ActorService;
 import com.springbootframework.datapostgres.service.FilmService;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@RequiredArgsConstructor //takes care of constructor injection
 @RestController
 @RequestMapping("/actors")
 public class ActorController {
@@ -25,12 +27,6 @@ public class ActorController {
     private final ModelMapper modelMapper;
     private final ActorService actorService;
     private final FilmService filmService;
-
-    public ActorController(ActorService actorService, FilmService filmService, ModelMapper modelMapper) {
-        this.actorService = actorService;
-        this.filmService = filmService;
-        this.modelMapper = modelMapper;
-    }
 
 //    @GetMapping
 //    public ResponseEntity<List<Actor>> getActors() {
