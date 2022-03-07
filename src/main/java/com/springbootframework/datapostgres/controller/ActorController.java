@@ -96,6 +96,18 @@ public class ActorController {
                 .collect(Collectors.toList()), HttpStatus.OK) ;
     }
 
+    @GetMapping("/films/{id}")
+    public ResponseEntity<Object> getFilmById(@PathVariable("id") Integer id) {
+        Optional<Film> filmOptional = filmService.fetchFilmById(id);
+        if (filmOptional.isPresent()) {
+            Film film = filmOptional.get();
+            return new ResponseEntity<>(modelMapper.map(film, FilmDTO.class), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(String.format("Invalid id : %s ", id), HttpStatus.NOT_FOUND);
+        }
+
+    }
+
     @PostMapping
     public ResponseEntity<Object> postActor(@Valid final @RequestBody Actor actor) {
         try {
