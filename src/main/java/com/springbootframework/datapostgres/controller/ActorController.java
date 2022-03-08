@@ -76,13 +76,9 @@ public class ActorController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteActor(@PathVariable("id") Integer id) {
-        Actor actorToDelete = this.actorService.deleteActorById(id);
-        if (actorToDelete != null) {
-            return new ResponseEntity<>(modelMapper.map(actorToDelete, ActorDTO.class), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(String.format("Invalid id : %s ", id), HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<String> deleteActor(@PathVariable("id") Integer id) {
+        this.actorService.deleteActorById(id);
+        return new ResponseEntity<>(String.format("Actor with id : %s deleted successfully", id), HttpStatus.OK);
     }
 
     @GetMapping("/films")

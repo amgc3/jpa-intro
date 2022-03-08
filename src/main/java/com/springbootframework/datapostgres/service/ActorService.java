@@ -10,5 +10,5 @@ public interface ActorService {
     List<Actor> fetchActors();
     Optional<Actor> fetchActorById(Integer id);
     Actor updateActorById(Integer id, Actor a);
-    Actor deleteActorById(Integer id);
+    void deleteActorById(Integer id);
 }

@@ -1,5 +1,6 @@
 package com.springbootframework.datapostgres.service.impl;
 
+import com.springbootframework.datapostgres.exception.ResourceNotFoundException;
 import com.springbootframework.datapostgres.model.Actor;
 import com.springbootframework.datapostgres.repository.ActorRepository;
 import com.springbootframework.datapostgres.service.ActorService;
@@ -18,14 +19,20 @@ public class ActorServiceImpl implements ActorService {
         this.actorRepository = actorRepository;
     }
 
+    @Override
     public List<Actor> fetchActors() {
         return actorRepository.findAll();
     }
 
+    @Override
     public Optional<Actor> fetchActorById(Integer id) {
+        // alternative
+        // return actorRepository.findById(id)
+        // .orElseThrow(() -> new ResourceNotFoundException("Actor", "id", id));
         return actorRepository.findById(id);
     }
 
+    @Override
     public Actor updateActorById(Integer id, Actor a) {
         Optional<Actor> actorToUpdateOptional = actorRepository.findById(id);
         if (!actorToUpdateOptional.isPresent()) {
@@ -49,18 +56,14 @@ public class ActorServiceImpl implements ActorService {
         return updatedActor;
     }
 
-    public Actor deleteActorById(Integer id){
-        Optional<Actor> actorOptional = this.actorRepository.findById(id);
-        if (!actorOptional.isPresent()) {
-            return null;
-        } else {
-            Actor actorToDelete = actorOptional.get();
-            this.actorRepository.delete(actorToDelete);
-            return actorToDelete;
-        }
+    @Override
+    public void deleteActorById(Integer id){
+        Actor actor = this.actorRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Actor", "id", id));
+        this.actorRepository.delete(actor);
     }
 
+    @Override
     public Actor createActor(Actor actor) {
-        return actorRepository.save(actor);
+        return this.actorRepository.save(actor);
     }
 }
