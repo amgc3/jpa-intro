@@ -107,7 +107,7 @@ public class ActorController {
             Actor savedActor = this.actorService.createActor(actor);
             return new ResponseEntity<>(modelMapper.map(savedActor, ActorDTO.class), HttpStatus.CREATED);
         } catch(Exception e) {
-            System.out.println("saved actpr " + this.actorService.createActor(actor));
+            System.out.println("saved actor " + this.actorService.createActor(actor));
             return new ResponseEntity<>(String.format("Validation failed!"), HttpStatus.BAD_REQUEST);
         }
     }
