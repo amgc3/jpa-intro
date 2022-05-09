@@ -24,6 +24,7 @@ public class ActorControllerTest {
         List<ActorDTO> response = entity.getBody();
         assertNotNull(response);
         assertEquals(7, response.size());
+        System.out.println(response); // this is an ArrayList
     }
 
     @Test
