@@ -40,7 +40,7 @@ import java.util.List;
 @Component
 public class Actor {
 
-    private enum ActorGender {
+    public enum ActorGender {
         M,
         F
     }
