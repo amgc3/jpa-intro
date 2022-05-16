@@ -76,6 +76,7 @@ public class ActorControllerTest {
         when(actorService.fetchActors()).thenReturn((actors));
         mockMvc.perform(MockMvcRequestBuilders
                 .get("/actors"))
+                .andDo(print())  // will print the request and response
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.size()", Matchers.is(3)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].firstName").value("Mick"))
@@ -88,7 +89,8 @@ public class ActorControllerTest {
     void should_return_actor_with_given_id() throws Exception {
         when(actorService.fetchActorById(anyInt())).thenReturn(Optional.ofNullable(actor1));
         // create a mock HTTP request to verify the expected result
-        mockMvc.perform(MockMvcRequestBuilders.get("/actors/1"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/actors/1")
+                .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.firstName").value("Mick"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.lastName").value("Jordan"))
@@ -110,9 +112,10 @@ public class ActorControllerTest {
         Actor actor = new Actor(7, "Rob", "Jordan", Actor.ActorGender.M, LocalDate.parse("1995-12-23"), films, new City(1, "London", "UK"));
         // mock request "/actor"
         when(actorService.createActor(any(Actor.class))).thenReturn(actor);
-        mockMvc.perform(MockMvcRequestBuilders.post("/actors")
+        mockMvc.perform(MockMvcRequestBuilders.post("/actors").accept(MediaType.APPLICATION_JSON)
                 .content("{\"firstName\": \"Rob\", \"lastName\": \"Jordan\", \"gender\": \"M\", \"birthDate\": \"1992-12-23\"}")
                 .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
                 .andExpect(status().isCreated())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists());
 
